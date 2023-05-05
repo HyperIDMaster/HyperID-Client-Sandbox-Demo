@@ -1,0 +1,32 @@
+/* Copyright (C) HyperSphere.ai - All Rights Reserved 
+* Unauthorized copying of this file, via any medium is strictly prohibited 
+* Proprietary and confidential 
+*/
+.json-wrapper {
+    padding: 16px;
+    background-color: #191E25;
+    border-radius: 4px;
+    font-family: 'Courier New', Courier, monospace;
+    color: #fff;
+    overflow: auto;
+    font-size: 16px;
+    width: 560px;
+    word-break: break-word;
+
+    &.error {
+        color: var(--hid-text-dimmed);
+    }
+}
+
+@media (max-width: 1200px) {
+    .json-wrapper {
+        width: 480px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .json-wrapper {
+        max-width: 560px;
+        width: 100%;
+    }
+}

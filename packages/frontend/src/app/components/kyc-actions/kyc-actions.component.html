@@ -1,0 +1,117 @@
+<!--
+     Copyright (C) HyperSphere.ai - All Rights Reserved
+     Unauthorized copying of this file, via any medium is strictly prohibited
+     Proprietary and confidential
+-->
+<div class="page-section" id="kyc-api">
+    <h3 class="title title-size-s">
+        Know Your Customer (KYC)
+        <a class="fragment" routerLink="/" fragment="kyc-api"> # </a>
+    </h3>
+
+    <app-docs-link
+        link="https://hyperid.gitbook.io/hyperid-docs/api-documentation/resource-service-rest-api/kyc-api"
+    ></app-docs-link>
+
+    <div class="demo-section--wrapper">
+        <div>
+            <div class="demo-description">
+                For testing purposes, the KYC flow ends with options for user to
+                either confirm or reject the provided KYC information. In
+                production, the KYC information will be processed by the
+                designated KYC provider.
+            </div>
+            <span class="demo-description">
+                Go through identity identification, phone number verification,
+                and liveness check.
+            </span>
+            <div class="buttons-row--wrapper">
+                <button
+                    (click)="hid.getKycLink(3)"
+                    [disabled]="
+                        (hid.userInfo$ | async)?.isGuest ||
+                        !(hid.authState$ | async)
+                    "
+                >
+                    Pass Basic KYC
+                </button>
+
+                <div class="text-size-s text-color--yellow">
+                    <ng-container
+                        *ngIf="
+                            (hid.authState$ | async) &&
+                            (hid.userInfo$ | async)?.isGuest
+                        "
+                    >
+                        To pass kyc authenticate with web2 flow
+                    </ng-container>
+                    <ng-container *ngIf="!(hid.authState$ | async)">
+                        Please sign in first to make requests
+                    </ng-container>
+                </div>
+            </div>
+            <span class="demo-description">
+                Go through the basic KYC stages and the proof of residence
+                verification.
+            </span>
+            <div class="buttons-row--wrapper">
+                <button
+                    (click)="hid.getKycLink(4)"
+                    [disabled]="
+                        (hid.userInfo$ | async)?.isGuest ||
+                        !(hid.authState$ | async)
+                    "
+                >
+                    Pass Full KYC
+                </button>
+                <div class="text-size-s text-color--yellow">
+                    <ng-container
+                        *ngIf="
+                            (hid.authState$ | async) &&
+                            (hid.userInfo$ | async)?.isGuest
+                        "
+                    >
+                        To pass kyc authenticate with web2 flow
+                    </ng-container>
+                    <ng-container *ngIf="!(hid.authState$ | async)">
+                        Please sign in first to make requests
+                    </ng-container>
+                </div>
+            </div>
+            <span class="demo-description">
+                Returns the complete parameter list regarding user KYC status.
+            </span>
+
+            <div class="buttons-row--wrapper">
+                <button
+                    (click)="getFullStatus()"
+                    [disabled]="!(hid.authState$ | async)"
+                >
+                    Get full KYC status
+                </button>
+                <div class="text-size-s text-color--yellow">
+                    <ng-container *ngIf="!(hid.authState$ | async)">
+                        Please sign in first to make requests
+                    </ng-container>
+                </div>
+            </div>
+            <span class="demo-description">
+                Returns the brief parameter list regarding user KYC status.
+            </span>
+            <div class="buttons-row--wrapper">
+                <button
+                    (click)="getShortStatus()"
+                    [disabled]="!(hid.authState$ | async)"
+                >
+                    Get short KYC status
+                </button>
+                <div class="text-size-s text-color--yellow">
+                    <ng-container *ngIf="!(hid.authState$ | async)">
+                        Please sign in first to make requests
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+        <app-json-showcase [json]="json"></app-json-showcase>
+    </div>
+</div>

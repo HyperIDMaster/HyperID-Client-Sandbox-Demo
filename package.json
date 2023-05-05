@@ -1,0 +1,10 @@
+{
+    "name": "hyperid-client-example",
+    "version": "1.0.0",
+    "workspaces": [
+        "packages/*"
+    ],
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    }
+}

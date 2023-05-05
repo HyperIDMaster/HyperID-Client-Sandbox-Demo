@@ -1,0 +1,90 @@
+<!--
+     Copyright (C) HyperSphere.ai - All Rights Reserved
+     Unauthorized copying of this file, via any medium is strictly prohibited
+     Proprietary and confidential
+-->
+<div class="page-section" id="services-interoperability-api">
+    <h3 class="title title-size-s">
+        Services Interoperability API
+        <a
+            class="fragment"
+            routerLink="/"
+            fragment="services-interoperability-api"
+        >
+            #
+        </a>
+    </h3>
+    <app-docs-link
+        link="https://hyperid.gitbook.io/hyperid-docs/api-documentation/resource-service-rest-api/services-interoperability-api"
+    ></app-docs-link>
+    <div class="demo-section--wrapper">
+        <div>
+            <div class="demo-description">
+                The API allows any service to store or upload data for a
+                specific user, using a key/value approach.
+                <br /><br />
+                It is important to note that the data is expected to be
+                encrypted, and HyperID does not have access to the encryption
+                keys. This means that the data can only be accessed by
+                authorized parties who have the appropriate encryption keys.
+            </div>
+            <div class="demo-description">
+                To set a data:
+                <ol>
+                    <li>In the key field, enter key.</li>
+                    <li>In the value field, enter value.</li>
+                    <li>Click Set Key.</li>
+                </ol>
+            </div>
+            <div class="input-group">
+                <input #setDataKey type="text" placeholder="Key" />
+                <input #setDataValue type="text" placeholder="Value" />
+                <button
+                    [disabled]="!(hid.authState$ | async)"
+                    (click)="setData()"
+                >
+                    Set Key
+                </button>
+            </div>
+            <div
+                *ngIf="setError$ | async"
+                class="info-section text-size-s text-color--yellow"
+            >
+                {{ setError$ | async }}
+            </div>
+            <div class="info-section text-size-s text-color--yellow">
+                <ng-container *ngIf="!(hid.authState$ | async)">
+                    Please sign in first to make requests
+                </ng-container>
+            </div>
+            <div class="demo-description">
+                To get a data:
+                <ol>
+                    <li>In the key field, enter key.</li>
+                    <li>Click Get Value.</li>
+                </ol>
+            </div>
+            <div class="input-group">
+                <input #getDataKey type="text" placeholder="Key" />
+                <button
+                    [disabled]="!(hid.authState$ | async)"
+                    (click)="getData()"
+                >
+                    Get Value
+                </button>
+            </div>
+            <div
+                *ngIf="getError$ | async"
+                class="info-section text-size-s text-color--yellow"
+            >
+                {{ getError$ | async }}
+            </div>
+            <div class="info-section text-size-s text-color--yellow">
+                <ng-container *ngIf="!(hid.authState$ | async)">
+                    Please sign in first to make requests
+                </ng-container>
+            </div>
+        </div>
+        <app-json-showcase [json]="json"></app-json-showcase>
+    </div>
+</div>

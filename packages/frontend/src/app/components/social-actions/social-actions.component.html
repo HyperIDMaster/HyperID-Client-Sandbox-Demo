@@ -1,0 +1,88 @@
+<!--
+     Copyright (C) HyperSphere.ai - All Rights Reserved
+     Unauthorized copying of this file, via any medium is strictly prohibited
+     Proprietary and confidential
+-->
+<div class="page-section" id="social-accounts-api">
+    <h3 class="title title-size-s">
+        Social Accounts API
+        <a class="fragment" routerLink="/" fragment="social-accounts-api">
+            #
+        </a>
+    </h3>
+    <div class="demo-section--wrapper">
+        <div>
+            <app-docs-link
+                link="https://hyperid.gitbook.io/hyperid-docs/api-documentation/authorization-flows/social-accounts"
+            ></app-docs-link>
+            <span class="demo-description">
+                Prompt for Telegram Account handle (ID).
+            </span>
+            <div class="buttons-row--wrapper">
+                <button
+                    [disabled]="!(hid.authState$ | async)"
+                    (click)="hid.addSocialInfo('TELEGRAM')"
+                >
+                    Add Telegram Handle
+                </button>
+                <div class="text-size-s text-color--yellow">
+                    <ng-container *ngIf="!(hid.authState$ | async)">
+                        Please sign in first to make requests
+                    </ng-container>
+                </div>
+            </div>
+            <span class="demo-description">
+                Prompt for Twitter Account handle (ID)
+            </span>
+            <div class="buttons-row--wrapper">
+                <button
+                    [disabled]="!(hid.authState$ | async)"
+                    (click)="hid.addSocialInfo('TWITTER')"
+                >
+                    Add Twitter Handle
+                </button>
+                <div class="text-size-s text-color--yellow">
+                    <ng-container *ngIf="!(hid.authState$ | async)">
+                        Please sign in first to make requests
+                    </ng-container>
+                </div>
+            </div>
+            <app-docs-link
+                link="https://hyperid.gitbook.io/hyperid-docs/api-documentation/resource-service-rest-api/social-accounts-api"
+            ></app-docs-link>
+            <span class="demo-description">
+                Retrieve user's Telegram handle.
+            </span>
+            <div class="buttons-row--wrapper">
+                <button
+                    [disabled]="!(hid.authState$ | async)"
+                    (click)="getSocialInfo('TELEGRAM')"
+                >
+                    Get Telegram Handle
+                </button>
+                <div class="text-size-s text-color--yellow">
+                    <ng-container *ngIf="!(hid.authState$ | async)">
+                        Please sign in first to make requests
+                    </ng-container>
+                </div>
+            </div>
+            <span class="demo-description">
+                Retrieve user's Twitter handle.
+            </span>
+            <div class="buttons-row--wrapper">
+                <button
+                    [disabled]="!(hid.authState$ | async)"
+                    (click)="getSocialInfo('TWITTER')"
+                >
+                    Get Twitter Handle
+                </button>
+                <div class="text-size-s text-color--yellow">
+                    <ng-container *ngIf="!(hid.authState$ | async)">
+                        Please sign in first to make requests
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+        <app-json-showcase [json]="json"></app-json-showcase>
+    </div>
+</div>

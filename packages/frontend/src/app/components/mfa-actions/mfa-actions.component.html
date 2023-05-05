@@ -1,0 +1,154 @@
+<!--
+     Copyright (C) HyperSphere.ai - All Rights Reserved
+     Unauthorized copying of this file, via any medium is strictly prohibited
+     Proprietary and confidential
+-->
+<div class="page-section" id="mfa-api">
+    <h3 class="title title-size-s">
+        Multi Factor Authorization (MFA)
+        <a class="fragment" routerLink="/" fragment="mfa-api"> # </a>
+    </h3>
+
+    <app-docs-link
+        link="https://hyperid.gitbook.io/hyperid-docs/api-documentation/resource-service-rest-api/mfa-api"
+    ></app-docs-link>
+
+    <div class="demo-section--wrapper">
+        <div>
+            <span class="demo-description">
+                Activate enhanced account protection.
+            </span>
+            <div class="buttons-row--wrapper">
+                <button
+                    [disabled]="
+                        !(hid.authState$ | async) || (hid.mfaState$ | async)
+                    "
+                    (click)="hid.login('SETUP_MFA')"
+                >
+                    Enable MFA
+                </button>
+                <div class="text-size-s text-color--yellow">
+                    <ng-container
+                        *ngIf="
+                            (hid.authState$ | async) && (hid.mfaState$ | async)
+                        "
+                    >
+                        You already have this feature enabled
+                    </ng-container>
+                    <ng-container
+                        *ngIf="
+                            (hid.authState$ | async) &&
+                            !(hid.pendingMfaAction$ | async) &&
+                            !(hid.mfaState$ | async)
+                        "
+                    >
+                        You have to enable mfa in order to check this section.
+                    </ng-container>
+                    <ng-container *ngIf="!(hid.authState$ | async)">
+                        Please sign in first to make requests
+                    </ng-container>
+                </div>
+            </div>
+            <span class="demo-description">
+                Send a confirmation request to HyperID Authenticator.
+            </span>
+            <div class="buttons-row--wrapper">
+                <button
+                    [disabled]="
+                        !(hid.authState$ | async) || !(hid.mfaState$ | async)
+                    "
+                    (click)="startTransaction()"
+                >
+                    Start Transaction
+                </button>
+                <div class="text-size-s text-color--yellow">
+                    <ng-container
+                        *ngIf="
+                            (hid.authState$ | async) &&
+                            !(hid.pendingMfaAction$ | async) &&
+                            !(hid.mfaState$ | async)
+                        "
+                    >
+                        You have to enable mfa in order to check this section.
+                    </ng-container>
+                    <ng-container *ngIf="!(hid.authState$ | async)">
+                        Please sign in first to make requests
+                    </ng-container>
+                </div>
+            </div>
+            <span class="demo-description"> Get a transaction state. </span>
+            <div class="buttons-row--wrapper">
+                <button
+                    [disabled]="
+                        !(hid.authState$ | async) ||
+                        !(hid.pendingMfaAction$ | async)
+                    "
+                    (click)="getActionStatus()"
+                >
+                    Get Transaction Status
+                </button>
+                <div class="text-size-s text-color--yellow">
+                    <ng-container
+                        *ngIf="
+                            (hid.authState$ | async) &&
+                            !(hid.pendingMfaAction$ | async) &&
+                            !(hid.mfaState$ | async)
+                        "
+                    >
+                        You have to enable mfa in order to check this section.
+                    </ng-container>
+                    <ng-container
+                        *ngIf="
+                            (hid.authState$ | async) &&
+                            !(hid.pendingMfaAction$ | async) &&
+                            (hid.mfaState$ | async)
+                        "
+                    >
+                        To check transaction status you need to start one first.
+                    </ng-container>
+                    <ng-container *ngIf="!(hid.authState$ | async)">
+                        Please sign in first to make requests
+                    </ng-container>
+                </div>
+            </div>
+            <span class="demo-description">
+                Stop the transaction processing.
+            </span>
+            <div class="buttons-row--wrapper">
+                <button
+                    (click)="cancelAction()"
+                    [disabled]="
+                        !(hid.authState$ | async) ||
+                        !(hid.pendingMfaAction$ | async)
+                    "
+                >
+                    Cancel Transaction
+                </button>
+                <div class="text-size-s text-color--yellow">
+                    <ng-container
+                        *ngIf="
+                            (hid.authState$ | async) &&
+                            !(hid.pendingMfaAction$ | async) &&
+                            !(hid.mfaState$ | async)
+                        "
+                    >
+                        You have to enable mfa in order to check this section.
+                    </ng-container>
+                    <ng-container
+                        *ngIf="
+                            (hid.authState$ | async) &&
+                            !(hid.pendingMfaAction$ | async) &&
+                            (hid.mfaState$ | async)
+                        "
+                    >
+                        To check cancel transaction you need to start one first.
+                    </ng-container>
+                    <ng-container *ngIf="!(hid.authState$ | async)">
+                        Please sign in first to make requests
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+        <app-json-showcase [json]="json"></app-json-showcase>
+    </div>
+</div>

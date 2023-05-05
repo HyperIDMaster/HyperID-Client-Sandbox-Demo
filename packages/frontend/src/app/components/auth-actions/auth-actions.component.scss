@@ -1,0 +1,32 @@
+/* Copyright (C) HyperSphere.ai - All Rights Reserved
+* Unauthorized copying of this file, via any medium is strictly prohibited
+* Proprietary and confidential
+*/
+.notice {
+    margin-block: 24px;
+}
+
+.auth-options-container {
+    display: flex;
+    column-gap: 32px;
+    row-gap: 32px;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+
+.auth-option {
+    display: grid;
+    grid-template-rows: 1fr auto;
+    row-gap: 16px;
+
+    button {
+        max-width: 220px;
+        width: 100%;
+    }
+}
+
+@media (max-width: 786px) {
+    .auth-options-container {
+        flex-direction: column;
+    }
+}

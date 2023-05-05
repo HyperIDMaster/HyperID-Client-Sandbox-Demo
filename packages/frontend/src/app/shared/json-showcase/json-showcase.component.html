@@ -1,0 +1,14 @@
+<!-- 
+     Copyright (C) HyperSphere.ai - All Rights Reserved 
+     Unauthorized copying of this file, via any medium is strictly prohibited 
+     Proprietary and confidential 
+-->
+<div
+    *ngIf="json"
+    [style.--height]="height + 'px'"
+    class="json-wrapper"
+    [innerHTML]="json | prettyprint"
+></div>
+<div [style.--height]="height + 'px'" class="json-wrapper error" *ngIf="!json">
+    Request result
+</div>

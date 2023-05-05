@@ -1,0 +1,284 @@
+<!--
+     Copyright (C) HyperSphere.ai - All Rights Reserved
+     Unauthorized copying of this file, via any medium is strictly prohibited
+     Proprietary and confidential
+-->
+<div class="page-section" id="user-wallet-api">
+    <h3 class="title title-size-s">
+        User Wallet API
+        <a class="fragment" routerLink="/" fragment="user-wallet-api"> # </a>
+    </h3>
+    <app-docs-link
+        link="https://hyperid.gitbook.io/hyperid-docs/api-documentation/resource-service-rest-api/user-wallet-api"
+    ></app-docs-link>
+    <div class="info-section text-size-s text-color--yellow">
+        <ng-container *ngIf="!(hid.authState$ | async)">
+            Please sign in first to make requests
+        </ng-container>
+    </div>
+    <div class="demo-section--wrapper">
+        <div>
+            <span class="demo-description">
+                Returns information about IDs of the blockchains HyperID
+                supports.
+            </span>
+            <div class="buttons-row--wrapper">
+                <button
+                    [disabled]="!(hid.authState$ | async)"
+                    (click)="getChains()"
+                >
+                    Get Supported Chains
+                </button>
+            </div>
+            <div class="demo-description">Returns a list of user wallets.</div>
+            <div class="buttons-row--wrapper" style="margin-top: 0">
+                <button
+                    [disabled]="!(hid.authState$ | async)"
+                    (click)="getUserWallets()"
+                >
+                    Get Wallets
+                </button>
+            </div>
+            <div class="demo-description" style="padding-top: 24px">
+                Use MetaMask extension to connect crypto wallet
+                <div
+                    class="buttons-row--wrapper"
+                    style="
+                        display: flex;
+                        flex-wrap: wrap;
+                        flex-direction: row;
+                        gap: 16px;
+                    "
+                >
+                    <button
+                        [disabled]="
+                            !(hid.authState$ | async) ||
+                            (blockchainService.connectionState$ | async)
+                        "
+                        (click)="connect()"
+                    >
+                        Connect Metamask
+                    </button>
+                    <button
+                        [disabled]="
+                            !(hid.authState$ | async) ||
+                            !(blockchainService.connectionState$ | async)
+                        "
+                        (click)="blockchainService.disconnect()"
+                    >
+                        Disconnect
+                    </button>
+                </div>
+            </div>
+
+            <div class="info-section">
+                <p class="text-size-s wallet-info">
+                    Wallet Address
+                    <span class="text-color--blue-bright">
+                        {{ blockchainService.walletAddress || "-" }}
+                    </span>
+                </p>
+                <div class="wallet-info--wrapper">
+                    <p class="text-size-s wallet-info">
+                        Blockchain ID
+                        <span class="text-color--blue-bright"
+                            >{{ blockchainService.chainId || "-" }}
+                        </span>
+                    </p>
+                    <p class="text-size-s wallet-info">
+                        Added
+                        <span class="text-color--blue-bright"
+                            >{{
+                                blockchainService.walletAddInfo.isAdded.toString()
+                                    | titlecase
+                            }}
+                        </span>
+                    </p>
+                    <!-- <p class="text-size-s wallet-info">
+                        Signed
+                        <span class="text-color--blue-bright"
+                            >{{
+                                blockchainService.walletAddInfo.isSigned.toString()
+                                    | titlecase
+                            }}
+                        </span>
+                    </p> -->
+                    <p class="text-size-s wallet-info">
+                        Label
+                        <span class="text-color--blue-bright">
+                            {{ blockchainService.walletInfo.label || "-" }}
+                        </span>
+                    </p>
+                    <p class="text-size-s wallet-info">
+                        Tags
+                        <span class="text-color--blue-bright">
+                            {{
+                                blockchainService.walletInfo.tags || "[]"
+                            }}</span
+                        >
+                    </p>
+                </div>
+            </div>
+            <div class="wallet-actions">
+                <!-- <div class="action--wrapper">
+                    <span>
+                        <b>Add Wallet.</b> Add connected wallet to user’s
+                        HyperID Account.
+                    </span>
+                    <button
+                        [disabled]="
+                            !(hid.authState$ | async) ||
+                            !(blockchainService.connectionState$ | async) ||
+                            blockchainService.walletAddInfo.isAdded
+                        "
+                        (click)="addWallet()"
+                    >
+                        Add Wallet
+                    </button>
+                </div>
+
+                <div class="action--wrapper">
+                    <span>
+                        <b>Sign Wallet.</b> Perform a sign wallet transaction to
+                        verify the user owns this wallet.
+                    </span>
+                    <button
+                        [disabled]="
+                            !(hid.authState$ | async) ||
+                            !(blockchainService.connectionState$ | async) ||
+                            blockchainService.walletAddInfo.isSigned ||
+                            !blockchainService.walletAddInfo.isAdded
+                        "
+                        (click)="verify()"
+                    >
+                        Sign Wallet
+                    </button>
+                </div>
+
+                <div class="action--wrapper">
+                    <span>
+                        <b>Add & Sign Wallet.</b> Combine Add and Sign
+                        operations in a single call.
+                    </span>
+                    <button
+                        [disabled]="
+                            !(hid.authState$ | async) ||
+                            !(blockchainService.connectionState$ | async) ||
+                            blockchainService.walletAddInfo.isAdded
+                        "
+                        (click)="addWallet(true)"
+                    >
+                        Sign & Add
+                    </button>
+                </div> -->
+
+                <div class="action--wrapper">
+                    <span>
+                        Add a tag to the wallet. Used to select and sort
+                        wallets.
+                    </span>
+                    <div class="input-group with-error">
+                        <input #addTagInput type="text" placeholder="Tag" />
+                        <button
+                            [disabled]="
+                                !(hid.authState$ | async) ||
+                                !(blockchainService.connectionState$ | async) ||
+                                !blockchainService.walletAddInfo.isAdded
+                            "
+                            (click)="addTag(addTagInput.value)"
+                        >
+                            Add
+                        </button>
+                        <p
+                            class="error info-section text-size-s text-color--yellow"
+                            [class.shown]="addTagError$ | async"
+                        >
+                            {{ addTagError$ | async }}
+                        </p>
+                    </div>
+                </div>
+
+                <div class="action-wrapper">
+                    <span> Sort user wallets by specific tag. </span>
+                    <div class="input-group">
+                        <input #tagInput type="text" placeholder="Tag" />
+                        <button
+                            [disabled]="!(hid.authState$ | async)"
+                            (click)="getUserWallets(tagInput.value)"
+                        >
+                            Get Wallets by Tag
+                        </button>
+                    </div>
+                </div>
+
+                <div class="action--wrapper">
+                    <span> Remove the tag from the connected wallet. </span>
+                    <div class="input-group with-error">
+                        <input #updateTagInput type="text" placeholder="Tag" />
+                        <button
+                            [disabled]="
+                                !(hid.authState$ | async) ||
+                                !(blockchainService.connectionState$ | async) ||
+                                !blockchainService.walletAddInfo.isAdded
+                            "
+                            (click)="archiveTag(updateTagInput.value)"
+                        >
+                            Remove
+                        </button>
+                        <p
+                            class="error info-section text-size-s text-color--yellow"
+                            [class.shown]="archiveTagError$ | async"
+                        >
+                            {{ archiveTagError$ | async }}
+                        </p>
+                    </div>
+                </div>
+
+                <div class="action--wrapper" style="margin-top: 16px">
+                    <span> Update the user’s connected wallet label. </span>
+                    <div class="input-group with-error">
+                        <input
+                            #updateLabelInput
+                            type="text"
+                            placeholder="Label"
+                        />
+                        <button
+                            [disabled]="
+                                !(hid.authState$ | async) ||
+                                !(blockchainService.connectionState$ | async) ||
+                                !blockchainService.walletAddInfo.isAdded
+                            "
+                            (click)="updateLabel(updateLabelInput.value)"
+                        >
+                            Update
+                        </button>
+                        <p
+                            class="error info-section text-size-s text-color--yellow"
+                            [class.shown]="updateLabelError$ | async"
+                        >
+                            {{ updateLabelError$ | async }}
+                        </p>
+                    </div>
+                </div>
+
+                <div class="action--wrapper">
+                    <span>
+                        Delete the connected user’s wallet from the HyperID
+                        account.
+                    </span>
+                    <button
+                        [disabled]="
+                            !(hid.authState$ | async) ||
+                            !(blockchainService.connectionState$ | async) ||
+                            !blockchainService.walletAddInfo.isAdded
+                        "
+                        (click)="archive()"
+                    >
+                        Remove
+                    </button>
+                </div>
+            </div>
+        </div>
+        <app-json-showcase [json]="json"></app-json-showcase>
+    </div>
+</div>

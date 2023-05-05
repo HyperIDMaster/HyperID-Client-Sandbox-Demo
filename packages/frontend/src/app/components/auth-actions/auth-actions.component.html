@@ -1,0 +1,265 @@
+<!--
+     Copyright (C) HyperSphere.ai - All Rights Reserved
+     Unauthorized copying of this file, via any medium is strictly prohibited
+     Proprietary and confidential
+-->
+<div class="page-section" id="authorization-flows">
+    <h2 class="title title-size-m">
+        Sign in / Sign up options
+        <a class="fragment" routerLink="/" fragment="authorization-flows">
+            #
+        </a>
+    </h2>
+    <app-docs-link
+        link="https://hyperid.gitbook.io/hyperid-docs/api-documentation/authorization-flows"
+    ></app-docs-link>
+    <div class="notice">
+        <b>Important</b>: Use '111111' as email verification code.
+    </div>
+    <div class="auth-options-container">
+        <div class="auth-option">
+            <p>
+                <a
+                    href="https://hyperid.gitbook.io/hyperid-docs/api-documentation/authorization-flows/sign-up-web-2.0"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="link"
+                >
+                    Sign-up </a
+                >&nbsp;with email / password or social account.
+            </p>
+            <button
+                [disabled]="hid.authState$ | async"
+                (click)="startAuth('WEB2_SIGN_UP')"
+            >
+                Web 2.0 Sign up
+            </button>
+        </div>
+        <div class="auth-option">
+            <p>
+                <a
+                    href="https://hyperid.gitbook.io/hyperid-docs/api-documentation/authorization-flows/sign-in-web-2.0"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="link"
+                >
+                    Sign-in </a
+                >&nbsp;with email / password or social account. 2FA will be
+                checked if configured before.
+            </p>
+            <button
+                [disabled]="hid.authState$ | async"
+                (click)="startAuth('WEB2_SIGN_IN')"
+            >
+                Web 2.0 Sign in
+            </button>
+        </div>
+        <div class="auth-option">
+            <p>
+                <a
+                    href="https://hyperid.gitbook.io/hyperid-docs/api-documentation/authorization-flows/connect-wallet"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="link"
+                >
+                    Sign-up </a
+                >&nbsp;with email / password or social account and connect
+                existing wallet address to user's account.
+            </p>
+            <button
+                [disabled]="hid.authState$ | async"
+                (click)="startAuth('WEB2_WEB3_SIGN_UP')"
+            >
+                Web 2.0 Sign up + Connect Wallet
+            </button>
+        </div>
+        <div class="auth-option">
+            <p>
+                <a
+                    href="https://hyperid.gitbook.io/hyperid-docs/api-documentation/authorization-flows/connect-wallet"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="link"
+                >
+                    Sign-in </a
+                >&nbsp;with email / password or social account and connect
+                existing wallet address to user's account.
+            </p>
+            <button
+                [disabled]="hid.authState$ | async"
+                (click)="startAuth('WEB2_WEB3_SIGN_IN')"
+            >
+                Web 2.0 Sign in + Connect Wallet
+            </button>
+        </div>
+        <div class="auth-option">
+            <p>
+                <a
+                    href="https://hyperid.gitbook.io/hyperid-docs/api-documentation/authorization-flows/web3-login"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="link"
+                >
+                    Login </a
+                >&nbsp;with wallet. In case of new user, guest account will be
+                created for user.
+            </p>
+            <button
+                [disabled]="hid.authState$ | async"
+                (click)="startAuth('WEB3_SIGN_IN')"
+            >
+                Web3 Sign in
+            </button>
+        </div>
+        <div class="auth-option">
+            <div>
+                Most complete
+                <a
+                    href="https://hyperid.gitbook.io/hyperid-docs/api-documentation/authorization-flows/advanced-web3-login"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="link"
+                >
+                    flow </a
+                >&nbsp;for entering with wallet address.
+                <br />
+                When the wallet is already bound to an existing account, the
+                user is either signed in or prompted to upgrade their guest
+                account. <br /><br />
+                Otherwise (a new wallet), the user can choose to
+                <br />
+                <ul>
+                    <li>
+                        sign-up with email / password or social account. Wallet
+                        will be bound to that account
+                    </li>
+                    <li>
+                        sign-in with existing account. Wallet will be bound to
+                        that account.
+                    </li>
+                    <li>create a guest account for this wallet</li>
+                </ul>
+            </div>
+            <button
+                [disabled]="hid.authState$ | async"
+                (click)="startAuth('UPGRADE_FROM_GUEST')"
+            >
+                Web3 Login
+            </button>
+        </div>
+    </div>
+    <div
+        class="info-section text-size-s text-color--yellow"
+        *ngIf="hid.authState$ | async"
+    >
+        Please sign out of current session to try another sign in method.
+    </div>
+</div>
+<div class="page-section" id="revoke-consent-api">
+    <h2 class="title title-size-m">
+        HyperID Features
+        <a class="fragment" routerLink="/" fragment="revoke-consent-api"> # </a>
+    </h2>
+    <h3 class="title title-size-s">Log out, Revoke consent</h3>
+    <div class="demo-section--wrapper">
+        <div>
+            <div class="info-section" *ngIf="hid.userInfo$ | async">
+                <p class="text-size-s">
+                    E-mail:
+                    <span class="text-color--blue-bright">
+                        {{ (hid.userInfo$ | async)?.email }}
+                    </span>
+                </p>
+                <p class="text-size-s" *ngIf="(hid.userInfo$ | async)?.wallet">
+                    Wallet:
+                    <span class="text-color--blue-bright">
+                        {{ (hid.userInfo$ | async)?.wallet }}
+                    </span>
+                </p>
+            </div>
+            <span class="demo-description">
+                The
+                <a
+                    href="https://hyperid.gitbook.io/hyperid-docs/api-documentation/authorization-api#sign-out-end-session-endpoint"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="link"
+                >
+                    Logout function </a
+                >&nbsp;allows users to terminate their session and log out of
+                the application or service.
+            </span>
+            <div class="buttons-row--wrapper">
+                <button
+                    [disabled]="!(hid.authState$ | async)"
+                    (click)="hid.logout()"
+                >
+                    Log Out
+                </button>
+                <div class="text-size-s text-color--yellow">
+                    <ng-container *ngIf="!(hid.authState$ | async)">
+                        Please sign in first to make requests
+                    </ng-container>
+                </div>
+            </div>
+            <span class="demo-description">
+                Used for
+                <a
+                    href="https://hyperid.gitbook.io/hyperid-docs/api-documentation/authorization-flows/guest-account-upgrade"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="link"
+                >
+                    Web3 </a
+                >&nbsp;users who have not fully completed account registration.
+            </span>
+            <div class="buttons-row--wrapper">
+                <button
+                    [disabled]="!(hid.userInfo$ | async)?.isGuest"
+                    (click)="startAuth('UPGRADE_FROM_GUEST')"
+                >
+                    Upgrade Guest Account
+                </button>
+                <div class="text-size-s text-color--yellow">
+                    <ng-container
+                        *ngIf="
+                            !(hid.userInfo$ | async)?.isGuest &&
+                            (hid.authState$ | async)
+                        "
+                    >
+                        To upgrade from guest account you need to sign out sign
+                        in as guest.
+                    </ng-container>
+                    <ng-container *ngIf="!(hid.authState$ | async)">
+                        Please sign in first to make requests
+                    </ng-container>
+                </div>
+            </div>
+            <span class="demo-description">
+                The
+                <a
+                    href="https://hyperid.gitbook.io/hyperid-docs/api-documentation/resource-service-rest-api/revoke-consent-api"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="link"
+                    >Revoke Consent</a
+                >&nbsp; feature allows users to revoke their consent previously
+                given consent for the application to access their data.
+            </span>
+            <div class="buttons-row--wrapper">
+                <button
+                    [disabled]="!(hid.authState$ | async)"
+                    (click)="revokeConsent()"
+                >
+                    Revoke consent
+                </button>
+                <div class="text-size-s text-color--yellow">
+                    <ng-container *ngIf="!(hid.authState$ | async)">
+                        Please sign in first to make requests
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+        <app-json-showcase [json]="json"></app-json-showcase>
+    </div>
+</div>

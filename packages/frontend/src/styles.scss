@@ -1,0 +1,242 @@
+/* Copyright (C) HyperSphere.ai - All Rights Reserved
+* Unauthorized copying of this file, via any medium is strictly prohibited
+* Proprietary and confidential
+*/
+@import url('https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+:root {
+    --hid-dark: #11141B;
+    --hid-bg-dark-dimmed: #191E25;
+    --hid-text-white: #fff;
+    --hid-text-main: #B0B0B0;
+    --hid-text-dimmed: #45515C;
+    --hid-blue-bright: #75CBDC;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+    // outline: 2px solid #f00;
+}
+
+html {
+    overflow-x: hidden;
+}
+
+body {
+    overflow-x: hidden;
+    font-family: 'Barlow', sans-serif;
+    background-color: var(--hid-dark);
+    color: var(--hid-text-main);
+    font-size: 16px;
+}
+
+button {
+    padding: 12px 24px;
+    border: none;
+    outline: none;
+    background-color: var(--hid-blue-bright);
+    color: var(--hid-dark);
+    font-weight: 600;
+    border-radius: 100vh;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    font-size: 14px;
+
+    &:disabled {
+        pointer-events: none;
+        opacity: 0.3;
+    }
+
+    &:hover {
+        opacity: 0.7;
+    }
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: var(--hid-text-dimmed);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #75CBDC;
+    border-radius: 8px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(117, 203, 220, 0.7);
+}
+
+::-webkit-scrollbar-corner {
+    background: #799ec1;
+}
+
+.page {
+    padding: 48px;
+    display: grid;
+    grid-template-columns: minmax(auto, 1300px);
+    justify-content: center;
+}
+
+.page-section {
+    padding-block: 32px;
+}
+
+.demo-section--wrapper {
+    display: flex;
+    justify-content: space-between;
+    column-gap: 32px;
+    padding-bottom: 32px;
+}
+
+.demo-description {
+    max-width: 610px;
+    width: 100%;
+    padding-bottom: 16px;
+}
+
+.info-section {
+    margin-block: 8px
+}
+
+.buttons-row--wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-block: 16px;
+}
+
+.input-group {
+    display: flex;
+    column-gap: 16px;
+    row-gap: 8px;
+    padding-block: 8px;
+    flex-wrap: wrap;
+}
+
+.jc-sb {
+    justify-content: space-between;
+}
+
+input {
+    padding: 8px;
+    outline: none;
+    border: 2px solid #999999;
+    border-radius: 4px;
+    background-color: var(--hid-dark);
+    color: #fff;
+}
+
+.text,
+.title {
+    line-height: 116%;
+}
+
+.title {
+    color: #fff;
+    font-weight: 600;
+}
+
+.title-size-l {
+    font-size: 64px;
+    margin-block: 32px;
+}
+
+.title-size-m {
+    font-size: 36px;
+    margin-block: 16px;
+}
+
+.title-size-s {
+    font-size: 24px;
+    margin-block: 8px;
+}
+
+.text-color--blue-bright {
+    color: var(--hid-blue-bright)
+}
+
+.text-color--yellow {
+    color: #cb8c2e;
+}
+
+.text-size-s {
+    font-size: 14px;
+}
+
+.mono {
+    font-family: 'Courier New', Courier, monospace;
+    color: var(--hid-blue-bright);
+}
+
+ol,
+ul {
+    padding-left: 16px;
+}
+
+.fragment {
+    color: var(--hid-blue-bright);
+    text-decoration: none;
+    opacity: 0.5;
+
+    &:hover,
+    &:visited {
+        opacity: 1;
+    }
+}
+
+.link {
+    color: var(--hid-blue-bright);
+}
+
+@media (max-width: 1024px) {
+    .demo-section--wrapper {
+        flex-direction: column;
+        row-gap: 32px;
+    }
+}
+
+@media (max-width: 768px) {
+    .page {
+        padding: 24px;
+    }
+
+    .page-section {
+        padding-block: 24px;
+    }
+
+    .title-size-l {
+        font-size: 48px;
+    }
+
+    .title-size-m {
+        font-size: 32px;
+    }
+}
+
+@media (max-width: 520px) {
+    .page {
+        padding: 16px;
+    }
+
+    .page-section {
+        padding-block: 16px;
+    }
+
+    .input-group {
+        flex-direction: column;
+        padding-block: 12px;
+    }
+}

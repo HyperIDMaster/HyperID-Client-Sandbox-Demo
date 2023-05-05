@@ -1,0 +1,62 @@
+<!--
+     Copyright (C) HyperSphere.ai - All Rights Reserved
+     Unauthorized copying of this file, via any medium is strictly prohibited
+     Proprietary and confidential
+-->
+<div class="page-section" id="multipass-api">
+    <h3 class="title title-size-s">
+        Multipass API, On-Chain KYC
+        <a class="fragment" routerLink="/" fragment="multipass-api"> # </a>
+    </h3>
+    <!-- <app-docs-link link=""></app-docs-link> -->
+    <div class="demo-section--wrapper">
+        <div>
+            <span class="demo-description">
+                Returns the user's
+                <a
+                    href="https://hyperid.gitbook.io/hyperid-docs/api-documentation/resource-service-rest-api/multipass-api"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="link"
+                >
+                    KYC status </a
+                >&nbsp;and linked social account handles.
+            </span>
+            <div class="buttons-row--wrapper">
+                <button
+                    [disabled]="!(hid.authState$ | async)"
+                    (click)="getUserMultiPassStatus()"
+                >
+                    Get User MultiPass (REST API)
+                </button>
+                <div class="text-size-s text-color--yellow">
+                    <ng-container *ngIf="!(hid.authState$ | async)">
+                        Please sign in first to make requests
+                    </ng-container>
+                </div>
+            </div>
+            <span class="demo-description">
+                Retrieving
+                <a
+                    href="https://hyperid.gitbook.io/hyperid-docs/api-documentation/multipass-nft-for-on-chain-kyc-status"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="link"
+                >
+                    on-chain MultiPass NFT </a
+                >&nbsp;information (on-chain KYC status). The user must claim
+                their MultiPass NFT to their wallet via the User's Portal, which
+                is not available for sandbox demo. So in this example, the
+                information is provided for a test wallet address that has
+                already claimed a MultiPass NFT.
+            </span>
+
+            <div class="buttons-row--wrapper">
+                <button (click)="getWalletWithMultiPassInfo()">
+                    Get MultiPass NFT for test wallet
+                </button>
+            </div>
+        </div>
+        <app-json-showcase [json]="json" [height]="240"></app-json-showcase>
+    </div>
+</div>
